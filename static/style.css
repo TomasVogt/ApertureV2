@@ -1,0 +1,77 @@
+/* Archivo: static/style.css */
+:root {
+    --bg-color: #2c3e50; --text-color: #ecf0f1; --accent-color: #3498db;
+    --node-bg: #34495e; --border-color: #485c70; --font-main: 'Inter', sans-serif;
+}
+* { box-sizing: border-box; }
+body { font-family: var(--font-main); background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 24px; }
+.container { max-width: 100%; width: 100%; }
+header {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
+    gap: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color); margin-bottom: 20px;
+}
+.logo-placeholder { font-size: 32px; font-weight: 700; }
+.input-group { display: flex; gap: 10px; flex-wrap: wrap; }
+input, select, button { padding: 12px; font-size: 15px; border-radius: 8px; border: 1px solid var(--border-color); background-color: var(--node-bg); color: var(--text-color); }
+button { font-weight: 700; cursor: pointer; background-color: var(--accent-color); border-color: var(--accent-color); color: #fff; }
+
+#loader {
+    display: flex; flex-direction: column; align-items: center; gap: 20px;
+    padding: 60px 20px; font-size: 18px; color: #bdc3c7;
+}
+#loader.hidden { display: none; }
+.spinner {
+    width: 56px; height: 56px; border-radius: 50%;
+    border: 5px solid var(--border-color);
+    border-top-color: var(--accent-color);
+    animation: spin 1s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.error { color: #ffcdd2; background-color: #b71c1c; padding: 20px; border-radius: 8px; text-align: center; }
+
+/* MAPA CONCEPTUAL */
+.mindmap-viewport { width: 100%; overflow-x: auto; }
+#mindmap-container { position: relative; display: inline-block; padding: 40px; }
+.mindmap-connectors { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+.mindmap-connectors path { stroke: var(--accent-color); stroke-width: 2px; fill: none; stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: draw-line 1s ease-out forwards; }
+@keyframes draw-line { to { stroke-dashoffset: 0; } }
+.mindmap-nodes { display: flex; gap: 100px; align-items: flex-start; }
+.column { display: flex; flex-direction: column; justify-content: center; gap: 40px; z-index: 2; }
+.node {
+    background-color: var(--node-bg); color: var(--text-color); padding: 15px;
+    border-radius: 8px; border: 1px solid var(--border-color);
+    width: 250px; text-align: left; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transition: all 0.3s ease; opacity: 0; animation: fadeIn 0.5s forwards;
+}
+.node:not(.hub) { cursor: pointer; }
+.node:not(.hub):hover { transform: translateY(-5px) scale(1.03); box-shadow: 0 8px 25px rgba(0,0,0,0.4); }
+@keyframes fadeIn { to { opacity: 1; } }
+.node.hub { background-color: var(--accent-color); font-weight: 700; text-align: center; }
+.node h4 { margin: 0; font-size: 16px; font-weight: 700; }
+.node-resource-icons { display: flex; gap: 8px; margin-top: 12px; font-size: 14px; color: #bdc3c7; }
+
+/* MODAL */
+#modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7); backdrop-filter: blur(5px);
+    display: flex; justify-content: center; align-items: center; z-index: 1000;
+    opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+}
+#modal-overlay.hidden { display: flex; }
+#modal-overlay:not(.hidden) { opacity: 1; pointer-events: all; }
+#modal-content {
+    background: var(--node-bg); padding: 30px; border-radius: 12px;
+    max-width: 600px; width: 90%; border: 1px solid var(--border-color);
+    position: relative; transform: scale(0.9); transition: transform 0.3s ease;
+}
+#modal-overlay:not(.hidden) #modal-content { transform: scale(1); }
+#modal-close-btn { position: absolute; top: 15px; right: 15px; background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; }
+#modal-title { margin-top: 0; color: var(--accent-color); }
+#modal-description { color: #bdc3c7; line-height: 1.6; }
+#modal-resources { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
+.resource-item { display: flex; align-items: center; gap: 15px; background: var(--bg-color); padding: 12px; border-radius: 8px; }
+.resource-icon { font-size: 24px; }
+.resource-details { overflow: hidden; }
+.resource-details p { margin: 0; font-weight: 500; text-align: left; font-style: normal; }
+.resource-details a { color: #80bfff; text-decoration: none; word-break: break-all; }
+.resource-details a:hover { text-decoration: underline; }
