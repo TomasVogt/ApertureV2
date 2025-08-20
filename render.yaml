@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: aperture-app
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn app:app"
+    envVars:
+      - key: GOOGLE_API_KEY
+        sync: false
+      - key: SERPER_API_KEY
+        sync: false
+    autoDeploy: true
